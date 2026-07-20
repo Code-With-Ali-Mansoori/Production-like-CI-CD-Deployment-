@@ -1,0 +1,16 @@
+services:
+  app : 
+    build: 
+      context: .
+      dockerfile: dockerfile
+    
+    #container_name: "aliahmedmansoori01/ci_cd_actions:1"
+
+    ports: [3000:3000]
+
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
