@@ -39,9 +39,7 @@ jobs:
         run: docker push aliahmedmansoori01/ci_cd_actions:1
 
       - name: Trigger Render deploy
-        run: |
-          echo "Calling Render deploy hook..."
-          curl ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: curl ${{ secrets.RENDER_DEPLOY_HOOK }}
 
       - name: Finish deployment
         run: echo "Production deployment completed successfully!"
