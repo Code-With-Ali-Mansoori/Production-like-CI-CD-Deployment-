@@ -1,0 +1,86 @@
+# Steps to CI-CD
+1. Create your Node.js + Express project.
+
+2. Write a Dockerfile
+   - Dockerfile
+
+3. Create a Docker Hub repository
+   Example
+   yourusername/expense-tracker
+
+4. Create a Render Web Service using the Docker image
+   (or create it once using the initial image)
+
+5. Copy the Render Deploy Hook
+
+6. Add GitHub Secrets
+   - DOCKER_USERNAME
+   - DOCKER_PASSWORD (Docker Hub Access Token)
+   - RENDER_DEPLOY_HOOK
+
+7. Write .github/workflows/deploy.yml
+
+   CI (Continuous Integration)
+   ├── Checkout Repository
+   ├── Setup Node.js
+   ├── Install Dependencies
+   ├── Run Lint (Optional)
+   ├── Run Tests
+   ├── Build Application (Optional, if your project has a build step)
+   └── Build Docker Image
+
+   CD (Continuous Deployment)
+   ├── Login to Docker Hub
+   ├── Push Docker Image
+   └── Trigger Render Deploy Hook
+
+8. Commit & Push
+
+9. GitHub Actions automatically:
+   ├── Checks out the latest code
+   ├── Installs dependencies
+   ├── Runs linting and tests
+   ├── Builds the application (if applicable)
+   ├── Builds the Docker image
+   ├── Pushes the image to Docker Hub
+   ├── Calls the Render Deploy Hook
+   ├── Render pulls the latest Docker image
+   └── The application is updated and goes live
+
+# Final Production Flow
+Developer
+    │
+git add .
+git commit
+git push
+    │
+    ▼
+GitHub Repository
+    │
+    ▼
+GitHub Actions (CI/CD)
+    │
+    ├── Checkout Repository
+    ├── Setup Node.js
+    ├── Install Dependencies
+    ├── Run Tests
+    ├── Build Application (if required)
+    ├── Build Docker Image
+    ├── Login to Docker Hub
+    ├── Push Docker Image
+    └── Trigger Render Deploy Hook
+            │
+            ▼
+       Docker Hub
+            │
+            ▼
+          Render
+            │
+    Pull Latest Docker Image
+            │
+    Stop Old Container
+            │
+    Start New Container
+            │
+            ▼
+      🌍 Application Live
